@@ -1,0 +1,49 @@
+{
+    "id": "bd0e75c9-4c28-4477-824e-e6a6bc55b925",
+    "version": "0.0.1",
+    "requiredApiVersion": "^1.19.0",
+    "iconFile": "icon.png",
+    "author": {
+        "name": "Rui Fernandes",
+        "homepage": "rocket.chat",
+        "support": "rocket.chat"
+    },
+    "name": "MyFirstApp",
+    "nameSlug": "myfirstapp",
+    "classFile": "MyFirstAppApp.ts",
+    "description": "demo app for canal telecom",
+    "implements": [
+        "IPreMessageSentPrevent",
+        "IPostMessageSent",
+        "IUIKitInteractionHandler"
+    ],
+    "permissions": [
+        {
+            "name": "ui.registerButtons"
+        },
+        {
+            "name": "slashcommand"
+        },
+        {
+            "name": "message.write"
+        },
+        {
+            "name": "networking"
+        },
+        {
+            "name": "room.read"
+        },
+        {
+            "name": "ui.interact"
+        },
+        {
+            "name": "api"
+        },
+        {
+            "name": "livechat-department.multiple"
+        },
+        {
+            "name": "env.read"
+        }
+    ]
+}

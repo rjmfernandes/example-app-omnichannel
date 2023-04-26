@@ -1,0 +1,10 @@
+{
+    "myfirstapp_hellocommand_description": "my slash command description",
+    "my-action-name": "My Action",
+    "myfirstapp_department": "Department",
+    "myfirstapp_department_desc": "Example of department select setting",
+    "myfirstapp_admin_username": "Admin Username",
+    "myfirstapp_admin_username_desc": "Username to be used for HTTP calls",
+    "myfirstapp_admin_user_pass": "Admin User Password",
+    "myfirstapp_admin_user_pass_desc": "User password to be used for HTTP calls"
+}
