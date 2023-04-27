@@ -8,13 +8,11 @@
         "homepage": "rocket.chat",
         "support": "rocket.chat"
     },
-    "name": "MyFirstApp",
-    "nameSlug": "myfirstapp",
-    "classFile": "MyFirstAppApp.ts",
-    "description": "demo app for canal telecom",
+    "name": "Omnichannel Demo App",
+    "nameSlug": "omnidemo",
+    "classFile": "DemoApp.ts",
+    "description": "demo app for omnichannel api",
     "implements": [
-        "IPreMessageSentPrevent",
-        "IPostMessageSent",
         "IUIKitInteractionHandler"
     ],
     "permissions": [
@@ -22,22 +20,10 @@
             "name": "ui.registerButtons"
         },
         {
-            "name": "slashcommand"
-        },
-        {
-            "name": "message.write"
-        },
-        {
             "name": "networking"
         },
         {
-            "name": "room.read"
-        },
-        {
             "name": "ui.interact"
-        },
-        {
-            "name": "api"
         },
         {
             "name": "livechat-department.multiple"
