@@ -12,7 +12,7 @@ import {
 import { App } from '@rocket.chat/apps-engine/definition/App';
 import { IAppInfo } from '@rocket.chat/apps-engine/definition/metadata';
 import { IUIKitInteractionHandler } from '@rocket.chat/apps-engine/definition/uikit/IUIKitActionHandler';
-import { UIKitViewSubmitInteractionContext, IUIKitResponse, ISectionBlock, UIKitActionButtonInteractionContext, BlockElementType } from '@rocket.chat/apps-engine/definition/uikit';
+import { UIKitViewSubmitInteractionContext, IUIKitResponse, ISectionBlock, UIKitActionButtonInteractionContext, BlockElementType, IBlock } from '@rocket.chat/apps-engine/definition/uikit';
 import { UIActionButtonContext } from '@rocket.chat/apps-engine/definition/ui/UIActionButtonContext';
 import { ISettingSelectValue, SettingType } from '@rocket.chat/apps-engine/definition/settings';
 
@@ -102,12 +102,16 @@ export class DemoApp extends App implements IUIKitInteractionHandler {
         // which one the user interacted with
         if (actionId === 'demoapp-action-id') {
             const blockBuilder = modify.getCreator().getBlockBuilder();
+            const agentStrings: string[]=await this.getAgentsState(department, url, username, password, http);
+            for(let i=0;i<agentStrings.length;i++) {
+                blockBuilder.addSectionBlock({
+                    text: blockBuilder.newPlainTextObject('- '+agentStrings[i])
+                });
+            }
 
             return context.getInteractionResponder().openModalViewResponse({
-                title: blockBuilder.newPlainTextObject('Agents of selected department:'),
-                blocks: blockBuilder.addSectionBlock({
-                    text: blockBuilder.newPlainTextObject(await this.getAgentsState(department, url, username, password, http))
-                }).getBlocks()
+                blocks: blockBuilder.getBlocks(),
+                title: blockBuilder.newPlainTextObject('Agents of selected department:')
             });
         }
 
@@ -140,13 +144,13 @@ export class DemoApp extends App implements IUIKitInteractionHandler {
 
     private async getAgentsState(department: string, url: string, username: string, password: string, http: IHttp) {
         let agents: string[] = await this.getAgents(department, url, username, password, http);
-        let agentString = '';
+        let agentString: string[] = [];
         let header = await this.buildHeader(url, username, password, http);
         for (let i = 0; i < agents.length; i++) {
             let agent = agents[i];
             let response = await this.processGet(url + '/api/v1/users.info?username=' + agent, http, header);
             let responseObj = JSON.parse('' + response.content);
-            agentString += ' ' + agent + ' (' + responseObj.user.status + ') ';
+            agentString.push( agent + ' (' + responseObj.user.status + ') ');
         }
         return agentString;
     }
