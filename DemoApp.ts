@@ -12,7 +12,7 @@ import {
 import { App } from '@rocket.chat/apps-engine/definition/App';
 import { IAppInfo } from '@rocket.chat/apps-engine/definition/metadata';
 import { IUIKitInteractionHandler } from '@rocket.chat/apps-engine/definition/uikit/IUIKitActionHandler';
-import { UIKitViewSubmitInteractionContext, IUIKitResponse, ISectionBlock, UIKitActionButtonInteractionContext, BlockElementType, IBlock } from '@rocket.chat/apps-engine/definition/uikit';
+import { IUIKitResponse, UIKitActionButtonInteractionContext } from '@rocket.chat/apps-engine/definition/uikit';
 import { UIActionButtonContext } from '@rocket.chat/apps-engine/definition/ui/UIActionButtonContext';
 import { ISettingSelectValue, SettingType } from '@rocket.chat/apps-engine/definition/settings';
 
