@@ -30,7 +30,7 @@ export class DemoApp extends App implements IUIKitInteractionHandler {
         configuration.ui.registerButton({
             actionId: 'demoapp-action-id', // this identifies your button in the interaction event
             labelI18n: 'demoapp-action-name', // key of the i18n string containing the name of the button
-            context: UIActionButtonContext.MESSAGE_ACTION, // in what context the action button will be displayed in the UI
+            context: UIActionButtonContext.ROOM_ACTION // in what context the action button will be displayed in the UI
         });
         await configuration.settings.provideSetting({
             id: 'demoapp_department',
@@ -66,17 +66,6 @@ export class DemoApp extends App implements IUIKitInteractionHandler {
             i18nLabel: 'demoapp_admin_user_pass',
             i18nDescription: 'demoapp_admin_user_pass_desc'
         });
-    }
-
-
-    public async executeViewSubmitHandler(context: UIKitViewSubmitInteractionContext): Promise<IUIKitResponse> {
-        const data = context.getInteractionData()
-
-        const text = (data.view.blocks[0] as ISectionBlock).text.text;
-
-        return {
-            success: true,
-        };
     }
 
     public async executeActionButtonHandler(
@@ -175,8 +164,6 @@ export class DemoApp extends App implements IUIKitInteractionHandler {
 
 
 }
-
-
 
 export async function getISettingSelectValues(livechat: ILivechatRead): Promise<ISettingSelectValue[]> {
     let values: ISettingSelectValue[] = [];

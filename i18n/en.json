@@ -1,5 +1,5 @@
 {
-    "demoapp-action-name": "My Action",
+    "demoapp-action-name": "Demo Action",
     "demoapp_department": "Department",
     "demoapp_department_desc": "Example of department select setting",
     "demoapp_admin_username": "Admin Username",
