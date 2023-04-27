@@ -132,9 +132,10 @@ export class DemoApp extends App implements IUIKitInteractionHandler {
     }
 
     private async getAgentsState(department: string, url: string, username: string, password: string, http: IHttp) {
-        let agents: string[] = await this.getAgents(department, url, username, password, http);
-        let agentString: string[] = [];
         let header = await this.buildHeader(url, username, password, http);
+        let agents: string[] = await this.getAgents(department, url,header, http);
+        let agentString: string[] = [];
+
         for (let i = 0; i < agents.length; i++) {
             let agent = agents[i];
             let response = await this.processGet(url + '/api/v1/users.info?username=' + agent, http, header);
@@ -150,8 +151,7 @@ export class DemoApp extends App implements IUIKitInteractionHandler {
         });
     }
 
-    private async getAgents(department: string, url: string, username: string, password: string, http: IHttp) {
-        let header = await this.buildHeader(url, username, password, http);
+    private async getAgents(department: string, url: string, header: string, http: IHttp) {
         let response = await this.processGet(url + '/api/v1/livechat/department/' + department + '/agents', http, header);
         let responseObj = JSON.parse('' + response.content);
         let agents: string[] = [];
