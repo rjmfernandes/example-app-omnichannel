@@ -45,26 +45,26 @@ export class DemoApp extends App implements IUIKitInteractionHandler {
             values: await getISettingSelectValues(this.getAccessors().reader.getLivechatReader())
         });
         await configuration.settings.provideSetting({
-            id: 'demoapp_admin_username',
+            id: 'demoapp_admin_userid',
             type: SettingType.STRING,
-            packageValue: 'demo',
+            packageValue: 'dEH9Zg5WYsvhFTpAy',
             required: true,
             public: true,
             hidden: false,
             multiline: false,
-            i18nLabel: 'demoapp_admin_username',
-            i18nDescription: 'demoapp_admin_username_desc'
+            i18nLabel: 'demoapp_admin_userid',
+            i18nDescription: 'demoapp_admin_userid_desc'
         });
         await configuration.settings.provideSetting({
-            id: 'demoapp_admin_user_pass',
+            id: 'demoapp_admin_user_pat',
             type: SettingType.PASSWORD,
-            packageValue: 'demo',
+            packageValue: 'GExDFxQEAV8lAQEF6VLA2g7NrNUSkkBWvviosAgux3E',
             required: true,
             public: true,
             hidden: false,
             multiline: false,
-            i18nLabel: 'demoapp_admin_user_pass',
-            i18nDescription: 'demoapp_admin_user_pass_desc'
+            i18nLabel: 'demoapp_admin_user_pat',
+            i18nDescription: 'demoapp_admin_user_pat_desc'
         });
     }
 
@@ -83,15 +83,15 @@ export class DemoApp extends App implements IUIKitInteractionHandler {
             room,
             message
         } = context.getInteractionData();
-        const username = await read.getEnvironmentReader().getSettings().getValueById('demoapp_admin_username');
-        const password = await read.getEnvironmentReader().getSettings().getValueById('demoapp_admin_user_pass');
+        const userid = await read.getEnvironmentReader().getSettings().getValueById('demoapp_admin_userid');
+        const pat = await read.getEnvironmentReader().getSettings().getValueById('demoapp_admin_user_pat');
         const url = await super.getAccessors().environmentReader.getEnvironmentVariables().getValueByName('ROOT_URL');
         const department = await read.getEnvironmentReader().getSettings().getValueById('demoapp_department');
         // If you have multiple action buttons, use `actionId` to determine
         // which one the user interacted with
         if (actionId === 'demoapp-action-id') {
             const blockBuilder = modify.getCreator().getBlockBuilder();
-            const agentStrings: string[]=await this.getAgentsState(department, url, username, password, http);
+            const agentStrings: string[]=await this.getAgentsState(department, url, userid, pat, http);
             for(let i=0;i<agentStrings.length;i++) {
                 blockBuilder.addSectionBlock({
                     text: blockBuilder.newPlainTextObject('- '+agentStrings[i])
@@ -116,23 +116,12 @@ export class DemoApp extends App implements IUIKitInteractionHandler {
         });
     }
 
-    private async buildHeader(url: string, username: string, password: string, http: IHttp): Promise<any> {
-        let header = { 'Content-Type': 'application/json' };
-        let payload = {
-            "user": username,
-            "password": password
-        };
-        let response = this.processPost(header, url + '/api/v1/login', payload, http);
-        let responseObj = JSON.parse('' + (await response).content);
-        return {
+    private async getAgentsState(department: string, url: string, userId: string, pat: string, http: IHttp) {
+        let header = {
             'Content-Type': 'application/json',
-            'X-Auth-Token': responseObj.data.authToken,
-            'X-User-Id': responseObj.data.userId
-        }
-    }
-
-    private async getAgentsState(department: string, url: string, username: string, password: string, http: IHttp) {
-        let header = await this.buildHeader(url, username, password, http);
+            'X-Auth-Token': pat,
+            'X-User-Id': userId
+        };
         let agents: string[] = await this.getAgents(department, url,header, http);
         let agentString: string[] = [];
 
@@ -151,7 +140,7 @@ export class DemoApp extends App implements IUIKitInteractionHandler {
         });
     }
 
-    private async getAgents(department: string, url: string, header: string, http: IHttp) {
+    private async getAgents(department: string, url: string, header: any, http: IHttp) {
         let response = await this.processGet(url + '/api/v1/livechat/department/' + department + '/agents', http, header);
         let responseObj = JSON.parse('' + response.content);
         let agents: string[] = [];
