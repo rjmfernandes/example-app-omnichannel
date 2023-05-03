@@ -30,6 +30,12 @@
         },
         {
             "name": "env.read"
+        },
+        {
+            "name": "message.write"
+        },
+        {
+            "name": "room.read"
         }
     ]
 }
